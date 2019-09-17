@@ -47,27 +47,39 @@ You can do that by using the function "list.files()". For this to work we need t
 To get list.files() to do this, write ?list.files in the console and check out how the arguments "path" and "full.names" works. 
 
 ```{R}
+getwd()
+
+filelist <- list.files(path="/CogSci/CogCom/Week 3/Class/CogCom/data", full.names = "TRUE")
+
 ```
 
 If you have done previous step correctly you should have a 139 item long list of file names starting with "data/" and then some number.
 
 
+
 1.5)Next we will use a handy function from tidyverse map_df, that allow us to call a function on each file name in our list and unite the result into a data-frame. It will take a couple of minutes to load in all the files, and at the end it will mention something about "coercing into character vector..." - don't worry about this.
 Replace quotated parts and run the command:
 ```{R}
-sarah_data <- map_df("list of file names goes here",function(x) read.CLAN.file(x))
+sarah_data <- map_df(filelist,function(x) read.CLAN.file(x))
 ```
 Now go and view the data frame. It should contain 84443 observations of 30 variables.
 
 
 1.6) To make things clearer lets throw away the variables we won't need. Use the function "select" or another subsetting command to create a new data frame which only contains the columns "Speaker", "Gloss", and "Date".
 ```{R}
+?select()
+
+sarah_data_select<- select(sarah_data, Speaker, Gloss, Date)
+
 ```
 
 
 
 1.7) Lets save our data so we won't have to rerun the long data import again. To do this you can use "write.csv". Remember to put a ".csv" at the end of the output file so that it will be in csv format.
 ```{R}
+?write.csv
+
+write.csv(sarah_data_select, "sarah_data_select.csv")
 
 ```
 
@@ -77,7 +89,7 @@ Now go and view the data frame. It should contain 84443 observations of 30 varia
 
 2.1) Start out by loading the data you saved in last part
 ```{R}
-sarah_data <- read.csv("name of saved file", header = T)
+sarah_data <- read.csv("sarah_data_select.csv", header = T)
 ```
 
 
@@ -88,11 +100,23 @@ You want "Speaker" to be "factor".
 You want "Gloss" to be "character".
 And you want "Date" to be "date".
 ```{R}
+class(sarah_data_select$Speaker)
+
+class(sarah_data_select$Gloss)
+
+class(sarah_data_select$Date)
+
+#they're all characters
+
 ```
 
 2.3) If any of the columns are of the wrong class, then change it with "as.xxx"" where xxx is replaced by name of the desired class.
 If you get an error using "as.Date", try use anytime::anydate() instead.
 ```{R}
+sarah_data_select$Date <- anytime::anydate(sarah_data_select$Date)
+
+
+
 ```
 
 
