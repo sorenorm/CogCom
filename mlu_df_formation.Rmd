@@ -122,6 +122,9 @@ sarah_data_select$Date <- anytime::anydate(sarah_data_select$Date)
 
 2.4) In the data Sarah is conversing with several people but mainly her mother. We are only interested in the child-mother conversations. Make a dataframe where you only keep the rows where the speaker is "MOT" OR "CHI". I would suggest using filter() to do this. You need to pass it a logical statement like (xxx == yy). You say "Or" in R with "|". A logical "Or" statement looks like (xxx == yy | xxx == zz)
 ```{R}
+MCS <- filter(sarah_data_select, sarah_data_select$Speaker=="MOT" | sarah_data_select$Speaker=="CHI")
+
+
 
 ```
 HELP: https://r4ds.had.co.nz/transform.html#dplyr-basics
@@ -137,6 +140,9 @@ To find any special character you need two things. First you need the regular ex
 3.1) Make a new column in your dataset by using str_replace_all and regular expressions to remove all special characters:
 
 ```{R}
+MCS$GlossClear <- str_replace_all(MCS$Gloss, pattern="[.?+]", replacement="")
+
+?str_replace_all()
 
 ```
 TIP: https://stringr.tidyverse.org/articles/regular-expressions.html
@@ -155,6 +161,9 @@ Each cell in the cleaned text column corresponds to an utterance. So for each da
 
 3.1) The function "stri_count_words" from the package "stringi" does excatly what you would expect it to do. First install/load "stringi". Secondly, create a new column using "stri_count_words" to count the number of words in each utterance. 
 ```{R} 
+library(stringi)
+
+MCS$WordCount <- stri_count_words(MCS$GlossClear)
 
 ```
 
