@@ -174,7 +174,7 @@ By using group_by(Speaker) on our dataframe the computer will know that further 
 
 3.3)Use group_by to create a new data frame. You should give three arguments to group_by: your dataframe, Speaker and Date.
 ```{R}
-
+G_MCS <- group_by(MCS, Speaker, Date)
 ```
 Group_by doesn't change anything about the data, its effect is first visible when we apply further functions (if we wanted to apply functions to the full data frame again grouping can be removed with ungroup())
 
@@ -186,15 +186,18 @@ III) divide the two just calculated values to get the mlu.
 And remember we are interested to get these values for child and mother for each date. But this will happen automatically since we have already grouped our data.
 
 
-I have already given you the structure of how summarise can used to create a new dataframe with the desired values. 
-4.4) Replace quotated parts in order to create a data frame that contains I) number of words II)utterances and III) (number of words)/(utterances) 
+I have already given you the structure of how summarise can be used to create a new dataframe with the desired values. 
+4.4) Replace quotated parts in order to create a data frame that contains 
+I) number of words 
+II)utterances and 
+III) (number of words)/(utterances) 
 
 hint. each row corresponds to a single utterance. Roughly speaking, the function n() calculates the number of rows that went into the calculation, so you can use n() to calculate the number of utterances (the function doesn't take any arguments)
 ```{R}
 
-mlu_df <- summarise("grouped_dataframe", word_sum = "function"("variable"),
-                                         utterances = "function"("variable"),
-                                         mlu =  "sum of words"/ "number of utterances")
+mlu_df <- summarise(G_MCS, word_sum = sum(G_MCS$WordCount),
+                                         utterances = length(G_MCS$Speaker),
+                                         mlu =  word_sum/ utterances)
 
 
 ```  
