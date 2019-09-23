@@ -89,7 +89,7 @@ write.csv(sarah_data_select, "sarah_data_select.csv")
 
 2.1) Start out by loading the data you saved in last part
 ```{R}
-sarah_data <- read.csv("sarah_data_select.csv", header = T)
+sarah_data_select <- read.csv("sarah_data_select.csv", header = T)
 ```
 
 
@@ -179,7 +179,7 @@ MCS$Speaker <- as.factor(MCS$Speaker)
 class(MCS$Speaker)
 
 
-G_MCS <- group_by(MCS, Speaker, Date)
+G_MCS <- group_by(MCS, Date, Speaker)
 
 
 
