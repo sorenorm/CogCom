@@ -211,7 +211,7 @@ hint. each row corresponds to a single utterance. Roughly speaking, the function
 
 mlu_df <- summarise(G_MCS, word_sum = sum(G_MCS$WordCount),
                                          utterances = length(G_MCS$Speaker),
-                                         mlu =  word_sum/ utterances)
+                                         mlu =  word_sum / utterances)
 
 
 
